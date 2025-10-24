@@ -3,8 +3,8 @@ import SearchForm from '../components/SearchForm/SearchForm';
 import TourCard from '../components/TourCard/TourCard';
 import Loader from '../components/Loader';
 import Error from '../components/Error';
-import EmptyState from '../components/EmptyState';
 import { startSearchPrices, getSearchPrices, getHotels } from '../api/api';
+import './SearchPage.css'; 
 
 const SearchPage = () => {
   const [tours, setTours] = useState([]);
@@ -55,15 +55,14 @@ const SearchPage = () => {
   };
 
   return (
-    <div>
-      <h1>Пошук турів</h1>
+    <div className="search-page">
+      <h1 className="search-page__title">Пошук турів</h1>
       <SearchForm onSearch={handleSearch} />
 
       {loading && <Loader />}
       {error && <Error message={error} />}
-      {!loading && !error && tours.length === 0 && <EmptyState />}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: '700px', margin: '0 auto', padding: '25px', boxSizing: 'border-box' }}>
+      <div className="tours-grid">
         {tours.map(tour => {
           const hotel = hotelsMap[tour.hotelID];
           if (!hotel) return null;
