@@ -1,35 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPrice, getHotel } from '../api/api';
-import { formatDate, formatPrice } from '../utils/format';
+import Loader from '../components/Loader';
+import Error from '../components/Error';
+import TourCard from '../components/TourCard/TourCard';
 
 const TourPage = () => {
-  const { priceId, hotelId } = useParams();
-  const [price, setPrice] = useState(null);
+  const { tourId } = useParams();
+  const [tour, setTour] = useState(null);
   const [hotel, setHotel] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    getPrice(priceId).then(res => res.json()).then(setPrice);
-    getHotel(hotelId).then(res => res.json()).then(setHotel);
-  }, [priceId, hotelId]);
+    const fetchData = async () => {
+      setLoading(true);
+      setError('');
 
-  if (!price || !hotel) return <div>Завантаження...</div>;
+      try {
+        const priceRes = await getPrice(tourId);
+        const tourData = await priceRes.json();
+
+        const hotelRes = await getHotel(tourData.hotelID);
+        const hotelData = await hotelRes.json();
+
+        setTour(tourData);
+        setHotel(hotelData);
+      } catch (err) {
+        setError('Помилка завантаження даних туру');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [tourId]);
+
+  if (loading) return <Loader />;
+  if (error) return <Error message={error} />;
+  if (!tour || !hotel) return <p>Дані недоступні</p>;
 
   return (
-    <div style={{ maxWidth: '700px', margin: '0 auto' }}>
-      <h1>{hotel.name}</h1>
-      <p>{hotel.cityName}, {hotel.countryName}</p>
-      <img src={hotel.img} alt={hotel.name} style={{ width: '100%' }} />
-      <p>{hotel.description}</p>
-      <h2>Сервіси:</h2>
-      <ul>
-        {Object.entries(hotel.services).map(([k, v]) => (
-          <li key={k}>{k}: {v}</li>
-        ))}
-      </ul>
-      <h2>Деталі туру:</h2>
-      <p>{formatDate(price.startDate)} - {formatDate(price.endDate)}</p>
-      <p>Ціна: {formatPrice(price.amount)}</p>
+    <div style={{ maxWidth: '700px', margin: '0 auto', padding: '25px' }}>
+      {/* Используем TourCard */}
+      <TourCard tour={tour} hotel={hotel} />
     </div>
   );
 };

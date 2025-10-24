@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SearchPage from './pages/SearchPage';
 import TourPage from './pages/TourPage';
 
-function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<SearchPage />} />
-        <Route path="/tour/:priceId/:hotelId" element={<TourPage />} />
+        <Route path="/tour/:tourId" element={<TourPage />} />
       </Routes>
     </Router>
   );
-}
+};
 
 export default App;

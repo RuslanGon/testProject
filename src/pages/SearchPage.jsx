@@ -16,8 +16,10 @@ const SearchPage = () => {
     setLoading(true);
     setError('');
     setTours([]);
+    setHotelsMap({});
 
     try {
+      // Запуск поиска и получение токена
       const res = await startSearchPrices(countryId);
       const { token } = await res.json();
 
@@ -26,6 +28,7 @@ const SearchPage = () => {
           const pricesRes = await getSearchPrices(token);
           const pricesData = (await pricesRes.json()).prices;
 
+          // Получаем отели для страны
           const hotelsRes = await getHotels(countryId);
           const hotelsData = await hotelsRes.json();
 
@@ -33,6 +36,7 @@ const SearchPage = () => {
           setTours(Object.values(pricesData));
 
         } catch (err) {
+          // Если результаты еще не готовы (HTTP 425)
           if (err.status === 425) {
             const data = await err.json();
             const waitTime = new Date(data.waitUntil) - Date.now();
@@ -40,6 +44,7 @@ const SearchPage = () => {
             await fetchPrices(token, retries);
 
           } else if (retries > 0) {
+            // Повторная попытка при ошибке
             await fetchPrices(token, retries - 1);
 
           } else {
@@ -61,22 +66,26 @@ const SearchPage = () => {
     <div>
       <h1>Пошук турів</h1>
       <SearchForm onSearch={handleSearch} />
+
       {loading && <Loader />}
       {error && <Error message={error} />}
       {!loading && !error && tours.length === 0 && <EmptyState />}
+
       <div style={{
-  display: 'flex',
-  flexWrap: 'wrap',
-  justifyContent: 'center',
-  maxWidth: '700px',
-  margin: '0 auto',
-  padding: '25px',
-  boxSizing: 'border-box'
-}}>
-  {tours.map(tour => (
-    <TourCard key={tour.id} tour={tour} hotel={hotelsMap[tour.hotelID]} />
-  ))}
-</div>
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        maxWidth: '700px',
+        margin: '0 auto',
+        padding: '25px',
+        boxSizing: 'border-box'
+      }}>
+        {tours.map(tour => {
+          const hotel = hotelsMap[tour.hotelID];
+          if (!hotel) return null; 
+          return <TourCard key={tour.id} tour={tour} hotel={hotel} />;
+        })}
+      </div>
     </div>
   );
 };
