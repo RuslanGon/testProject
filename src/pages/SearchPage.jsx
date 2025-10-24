@@ -32,6 +32,7 @@ const SearchPage = () => {
 
           setHotelsMap(hotelsData);
           setTours(Object.values(pricesData));
+
         } catch (err) {
           if (err.status === 425) {
             const data = await err.json();
@@ -47,6 +48,7 @@ const SearchPage = () => {
       };
 
       await fetchPrices(token);
+
     } catch (err) {
       setError('Помилка пошуку турів');
     } finally {

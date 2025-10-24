@@ -6,7 +6,7 @@ import Error from '../components/Error';
 import TourCard from '../components/TourCard/TourCard';
 
 const TourPage = () => {
-  const { tourId } = useParams();
+  const { priceId, hotelId } = useParams();
   const [tour, setTour] = useState(null);
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,10 +18,10 @@ const TourPage = () => {
       setError('');
 
       try {
-        const priceRes = await getPrice(tourId);
+        const priceRes = await getPrice(priceId);
         const tourData = await priceRes.json();
 
-        const hotelRes = await getHotel(tourData.hotelID);
+        const hotelRes = await getHotel(parseInt(hotelId));
         const hotelData = await hotelRes.json();
 
         setTour(tourData);
@@ -34,7 +34,7 @@ const TourPage = () => {
     };
 
     fetchData();
-  }, [tourId]);
+  }, [priceId, hotelId]);
 
   if (loading) return <Loader />;
   if (error) return <Error message={error} />;
@@ -42,7 +42,7 @@ const TourPage = () => {
 
   return (
     <div style={{ maxWidth: '700px', margin: '0 auto', padding: '25px' }}>
-      <TourCard tour={tour} hotel={hotel} full />
+      <TourCard tour={tour} hotel={hotel} />
     </div>
   );
 };
