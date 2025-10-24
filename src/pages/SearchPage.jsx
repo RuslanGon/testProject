@@ -11,12 +11,14 @@ const SearchPage = () => {
   const [hotelsMap, setHotelsMap] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async (countryId) => {
     setLoading(true);
     setError('');
     setTours([]);
     setHotelsMap({});
+    setHasSearched(true);
 
     try {
       const res = await startSearchPrices(countryId);
@@ -63,6 +65,10 @@ const SearchPage = () => {
       {error && <Error message={error} />}
 
       <div className="tours-grid">
+        {hasSearched && !loading && !error && tours.length === 0 && (
+          <p className="no-results">За вашим запитом турів не знайдено 😔</p>
+        )}
+
         {tours.map(tour => {
           const hotel = hotelsMap[tour.hotelID];
           if (!hotel) return null;
