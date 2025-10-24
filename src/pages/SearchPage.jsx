@@ -16,6 +16,7 @@ const SearchPage = () => {
     setLoading(true);
     setError('');
     setTours([]);
+
     try {
       const res = await startSearchPrices(countryId);
       const { token } = await res.json();
@@ -30,14 +31,17 @@ const SearchPage = () => {
 
           setHotelsMap(hotelsData);
           setTours(Object.values(pricesData));
+
         } catch (err) {
           if (err.status === 425) {
             const data = await err.json();
             const waitTime = new Date(data.waitUntil) - Date.now();
             await new Promise(r => setTimeout(r, waitTime > 0 ? waitTime : 1000));
             await fetchPrices(token, retries);
+
           } else if (retries > 0) {
             await fetchPrices(token, retries - 1);
+
           } else {
             setError('Помилка пошуку турів');
           }
@@ -45,6 +49,7 @@ const SearchPage = () => {
       };
 
       await fetchPrices(token);
+
     } catch (err) {
       setError('Помилка пошуку турів');
     } finally {
