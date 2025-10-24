@@ -1,17 +1,46 @@
 import React from 'react';
-import { formatDate, formatPrice } from '../../utils/format';
-import './TourCard.css';
-import { Link } from 'react-router-dom';
+
+const formatDate = (iso) => {
+  const d = new Date(iso);
+  return d.toLocaleDateString('uk-UA');
+};
+
+const formatPrice = (amount, currency) => {
+  return amount.toLocaleString('uk-UA', { style: 'currency', currency });
+};
 
 const TourCard = ({ tour, hotel }) => {
+  if (!tour || !hotel) return null;
+
   return (
-    <div className="tour-card">
-      <img src={hotel.img} alt={hotel.name} />
+    <div style={{
+      width: '300px',
+      border: '1px solid #ddd',
+      borderRadius: '8px',
+      margin: '10px',
+      padding: '15px',
+      boxSizing: 'border-box',
+    }}>
+      <img
+        src={hotel.img}
+        alt={hotel.name}
+        style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '6px' }}
+      />
       <h3>{hotel.name}</h3>
-      <p>{hotel.cityName}, {hotel.countryName}</p>
-      <p>{formatDate(tour.startDate)} - {formatDate(tour.endDate)}</p>
-      <p>{formatPrice(tour.amount, 'грн')}</p>
-      <Link to={`/tour/${tour.id}/${hotel.id}`}>Відкрити ціну</Link>
+      <p>{hotel.countryName}, {hotel.cityName}</p>
+      <p>Дати: {formatDate(tour.startDate)} - {formatDate(tour.endDate)}</p>
+      <p>Ціна: {formatPrice(tour.amount, tour.currency)}</p>
+      <a href={`/tour/${tour.id}`} style={{
+        display: 'inline-block',
+        marginTop: '10px',
+        padding: '8px 12px',
+        backgroundColor: '#007bff',
+        color: '#fff',
+        borderRadius: '4px',
+        textDecoration: 'none'
+      }}>
+        Відкрити ціну
+      </a>
     </div>
   );
 };

@@ -64,11 +64,19 @@ const SearchPage = () => {
       {loading && <Loader />}
       {error && <Error message={error} />}
       {!loading && !error && tours.length === 0 && <EmptyState />}
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {tours.map(tour => (
-          <TourCard key={tour.id} tour={tour} hotel={hotelsMap[tour.hotelID]} />
-        ))}
-      </div>
+      <div style={{
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  maxWidth: '700px',
+  margin: '0 auto',
+  padding: '25px',
+  boxSizing: 'border-box'
+}}>
+  {tours.map(tour => (
+    <TourCard key={tour.id} tour={tour} hotel={hotelsMap[tour.hotelID]} />
+  ))}
+</div>
     </div>
   );
 };
