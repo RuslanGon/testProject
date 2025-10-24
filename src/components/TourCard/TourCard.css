@@ -1,0 +1,22 @@
+.tour-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 300px;
+    box-sizing: border-box;
+  }
+  
+  .tour-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .tour-card h3 {
+    margin: 5px 0;
+  }
+  
+  .tour-card p {
+    margin: 2px 0;
+  }
+  
