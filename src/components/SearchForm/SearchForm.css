@@ -14,7 +14,7 @@
     font-size: 1rem;
     transition: all 0.3s ease;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    box-sizing: border-box; /* Важно для одинаковой ширины */
+    box-sizing: border-box; 
   }
   
   .search-form input:focus {
@@ -50,7 +50,7 @@
     top: 50px;
     left: 0;
     right: 0;
-    width: 100%; /* Подгоняем ширину под input */
+    width: 100%; 
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);

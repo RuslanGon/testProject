@@ -7,7 +7,7 @@ import TourCard from '../components/TourCard/TourCard';
 
 const TourPage = () => {
   const { priceId, hotelId } = useParams();
-  const navigate = useNavigate(); // хук для навигации
+  const navigate = useNavigate(); 
   const [tour, setTour] = useState(null);
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,6 @@ const TourPage = () => {
         setTour(tourData);
         setHotel(hotelData);
 
-        // Прокрутка вверх при открытии страницы
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } catch (err) {
         setError('Помилка завантаження даних туру');
@@ -50,7 +49,6 @@ const TourPage = () => {
 
   return (
     <div style={{ maxWidth: '700px', margin: '0 auto', padding: '25px' }}>
-      {/* Кнопка Назад */}
       <button
         onClick={handleBack}
         style={{
@@ -65,7 +63,6 @@ const TourPage = () => {
       >
         ← Назад
       </button>
-
       <TourCard tour={tour} hotel={hotel} />
     </div>
   );

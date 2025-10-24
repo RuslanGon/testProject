@@ -49,6 +49,7 @@ const TourCard = ({ tour, hotel }) => {
       }}>
         Відкрити ціну
       </Link>
+      
     </div>
   );
 };
