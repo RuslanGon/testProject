@@ -42,8 +42,7 @@ const TourPage = () => {
 
   return (
     <div style={{ maxWidth: '700px', margin: '0 auto', padding: '25px' }}>
-      {/* Используем TourCard */}
-      <TourCard tour={tour} hotel={hotel} />
+      <TourCard tour={tour} hotel={hotel} full />
     </div>
   );
 };

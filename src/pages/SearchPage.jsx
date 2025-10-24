@@ -19,7 +19,6 @@ const SearchPage = () => {
     setHotelsMap({});
 
     try {
-      // Запуск поиска и получение токена
       const res = await startSearchPrices(countryId);
       const { token } = await res.json();
 
@@ -28,25 +27,19 @@ const SearchPage = () => {
           const pricesRes = await getSearchPrices(token);
           const pricesData = (await pricesRes.json()).prices;
 
-          // Получаем отели для страны
           const hotelsRes = await getHotels(countryId);
           const hotelsData = await hotelsRes.json();
 
           setHotelsMap(hotelsData);
           setTours(Object.values(pricesData));
-
         } catch (err) {
-          // Если результаты еще не готовы (HTTP 425)
           if (err.status === 425) {
             const data = await err.json();
             const waitTime = new Date(data.waitUntil) - Date.now();
             await new Promise(r => setTimeout(r, waitTime > 0 ? waitTime : 1000));
             await fetchPrices(token, retries);
-
           } else if (retries > 0) {
-            // Повторная попытка при ошибке
             await fetchPrices(token, retries - 1);
-
           } else {
             setError('Помилка пошуку турів');
           }
@@ -54,7 +47,6 @@ const SearchPage = () => {
       };
 
       await fetchPrices(token);
-
     } catch (err) {
       setError('Помилка пошуку турів');
     } finally {
@@ -82,7 +74,7 @@ const SearchPage = () => {
       }}>
         {tours.map(tour => {
           const hotel = hotelsMap[tour.hotelID];
-          if (!hotel) return null; 
+          if (!hotel) return null;
           return <TourCard key={tour.id} tour={tour} hotel={hotel} />;
         })}
       </div>
