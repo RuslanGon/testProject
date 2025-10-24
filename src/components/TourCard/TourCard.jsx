@@ -1,15 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// Форматирование даты
 const formatDate = (iso) => {
   const d = new Date(iso);
   return d.toLocaleDateString('uk-UA');
 };
 
-// Форматирование цены
 const formatPrice = (amount, currency) => {
-  return amount.toLocaleString('uk-UA', { style: 'currency', currency: currency.toUpperCase() });
+  return amount.toLocaleString('uk-UA', { style: 'currency', currency });
 };
 
 const TourCard = ({ tour, hotel }) => {
@@ -22,14 +20,14 @@ const TourCard = ({ tour, hotel }) => {
       borderRadius: '8px',
       margin: '10px',
       padding: '15px',
+      boxSizing: 'border-box',
       display: 'flex',
-      flexDirection: 'column',
-      boxSizing: 'border-box'
+      flexDirection: 'column'
     }}>
       <Link to={`/tour/${tour.id}/${hotel.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
         <img
           src={hotel.img || 'https://via.placeholder.com/300x180?text=No+Image'}
-          alt={hotel.name || 'Назва готелю недоступна'}
+          alt={hotel.name || 'Готель'}
           style={{ width: '100%', height: '180px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px' }}
         />
         <h3>{hotel.name || 'Назва готелю недоступна'}</h3>

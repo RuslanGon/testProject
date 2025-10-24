@@ -32,7 +32,6 @@ const SearchPage = () => {
 
           setHotelsMap(hotelsData);
           setTours(Object.values(pricesData));
-
         } catch (err) {
           if (err.status === 425) {
             const data = await err.json();
@@ -48,7 +47,6 @@ const SearchPage = () => {
       };
 
       await fetchPrices(token);
-
     } catch (err) {
       setError('Помилка пошуку турів');
     } finally {
@@ -65,15 +63,7 @@ const SearchPage = () => {
       {error && <Error message={error} />}
       {!loading && !error && tours.length === 0 && <EmptyState />}
 
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        maxWidth: '700px',
-        margin: '0 auto',
-        padding: '25px',
-        boxSizing: 'border-box'
-      }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: '700px', margin: '0 auto', padding: '25px', boxSizing: 'border-box' }}>
         {tours.map(tour => {
           const hotel = hotelsMap[tour.hotelID];
           if (!hotel) return null;
