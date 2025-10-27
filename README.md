@@ -1,16 +1,35 @@
-# React + Vite
+Этапы разработки:
+1. Создание структуры приложения
+Инициализирован проект React
+Настроен базовый роутинг (React Router)
+Созданы страницы: SearchPage и TourPage
+2. Форма поиска
+Реализован компонент SearchForm
+Добавлен выпадающий список со странами, городами и отелями
+Настроен выбор элементов и отправка запроса на поиск
+3. Фейковое API
+Создан модуль DB.js, имитирующий базу данных
+Реализованы функции getCountries, searchGeo, getHotel, startSearchPrices, getSearchPrices
+Добавлена генерация случайных туров и цен
+4. Отображение результатов
+Добавлен компонент TourCard
+Реализовано отображение результатов поиска в виде карточек
+Настроен переход на страницу выбранного тура
+5. Улучшение UX/UI
+Добавлены стили, состояния загрузки, ошибки и отсутствие результатов
+Оптимизирован интерфейс и улучшен внешний вид
+Коммиты:
+1️⃣ init: создать структуру React-приложения и настроить роутинг
+    — Инициализация проекта, базовая структура и маршрутизация.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+2️⃣ feat: добавить компонент SearchForm с выпадающим списком и поиском
+    — Реализована форма поиска со странами, городами и отелями.
 
-Currently, two official plugins are available:
+3️⃣ feat: реализовать фейковое API для стран, городов и отелей
+    — Добавлен модуль DB.js и логика генерации туров с ценами.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+4️⃣ feat: добавить компонент TourCard и вывод результатов поиска
+    — Реализованы карточки туров и отображение найденных предложений.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+5️⃣ feat: улучшить UI, добавить загрузку, ошибки и пустое состояние
+    — Улучшен внешний вид и пользовательский опыт.
